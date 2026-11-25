@@ -8,9 +8,10 @@ from collections import deque
 BASEURL = "https://script.google.com/macros/s/AKfycbxYRsb-wCsPa6rbTBF-WACTaKdBdGolj33s42Eyq6ajKomV85p4Dj6wkCe-2JDymIW6/exec?token=4eMzpuVNHVWPCTz"
 
 now = datetime.datetime.now(ZoneInfo("Asia/Tokyo"))
-year = now.strftime("%Y")
-month = now.strftime("%m")
-day = now.strftime("%d")
+year: str = now.strftime("%Y")
+month: str = now.strftime("%m")
+day: str = now.strftime("%d")
+today: str = now.strftime("%Y-%m-%d")
 
 LIST = deque([
   ("pub", False),
@@ -20,7 +21,6 @@ LIST = deque([
 
 def getTodayType() -> str:
   json = requests.get("https://raw.githubusercontent.com/kgi-js-digital-creator/syukujitsu/artifact/syukujitsu.json", timeout=10).json()["body"]
-  today = now.strftime("%Y-%m-%d")
   if today in json or now.weekday() == 6:
     return "holi"
   elif now.weekday() == 5:
@@ -51,7 +51,7 @@ def deep_merge(base: dict, incoming: dict) -> dict:
   return result
 
 def main() -> dict:
-  data = {}
+  data = {"update": today}
   while LIST:
     type_name, is_temp = LIST.popleft()
     fetched = getJson(type_name, is_temp)
