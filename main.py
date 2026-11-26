@@ -36,7 +36,9 @@ def getJson(type: str, isTemp: bool) -> json:
 
   res = requests.get(url)
   if not res.status_code == 200:
+    print(f"Error: {res.status_code} {res.text}")
     return json.loads("{}")
+  print(res.text)
   return res.json()
 
 def deep_merge(base: dict, incoming: dict) -> dict:
