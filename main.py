@@ -58,7 +58,7 @@ def main() -> dict:
     type_name, is_temp = LIST.popleft()
     fetched = getJson(type_name, is_temp)
     data = deep_merge(data, fetched)
-    if fetched.status == "200" and type_name == "sch_temp":
+    if fetched["status"] == "200" and type_name == "sch_temp":
       break
   with open("timetable.json", "w", encoding="utf-8") as f:
     json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
